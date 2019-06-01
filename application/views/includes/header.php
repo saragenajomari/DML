@@ -1,3 +1,8 @@
+ <?php 
+ if(!isset($_SESSION['logged_in'])){
+     redirect('pages/index');
+ }  
+ ?>
  <!DOCTYPE html>
  <html>
  <head>

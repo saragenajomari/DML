@@ -62,7 +62,7 @@ class Accounts extends CI_Controller {
 		$password 	= 	$_POST['password']; 
 		$email 		= 	$_POST['email']; 
 		$cnum 		= 	$_POST['cnum']; 
-		$uname 		= 	$_POST['uname'];
+		//$uname 		= 	$_POST['uname'];
 
 		
         $_FILES['file']['name']     = $_FILES['file']['name'];
@@ -97,7 +97,7 @@ class Accounts extends CI_Controller {
             'status' => $status,
             'type' => $type,
             'contact' => $cnum,
-            'username' => $uname,
+            //'username' => $uname,
             'profilepic' => $fileNameNew,
             'rfid' 		=> ''
         );
@@ -113,12 +113,12 @@ class Accounts extends CI_Controller {
 
 	public function login(){
 
-		$uname 		= 	$_POST['uname'];
+		$sid 		= 	$_POST['sid'];
 		$password 	= 	$_POST['password'];
 
-		$exist = $this->Accounts_model->login($uname,$password);
+		$exist = $this->Accounts_model->login($sid,$password);
 		if ($exist) {
-			$data['logged'] = $this->Accounts_model->login_get_user($uname,$password);
+			$data['logged'] = $this->Accounts_model->login_get_user($sid,$password);
 			foreach($data['logged'] as $data_item_userdata){
 				$status				= 	$data_item_userdata->status;
 				if ($status == 'active') {
@@ -128,6 +128,7 @@ class Accounts extends CI_Controller {
                 	$_SESSION['lname'] 	= 	$data_item_userdata->lname;
                 	$_SESSION['type'] 	= 	$data_item_userdata->type;
                 	$_SESSION['uid'] 	= 	$data_item_userdata->id;
+                	$_SESSION['logged_in'] = TRUE;
                 	echo $uid;
 				}else{
 					echo 0;
@@ -148,7 +149,7 @@ class Accounts extends CI_Controller {
 		$password 	= 	$_POST['password']; 
 		$email 		= 	$_POST['email']; 
 		$cnum 		= 	$_POST['cnum']; 
-		$uname 		= 	$_POST['uname'];
+		//$uname 		= 	$_POST['uname'];
 		$file   	= 	$_POST['file'];
 
 		$type   	= 	$_SESSION['type'];
@@ -164,7 +165,7 @@ class Accounts extends CI_Controller {
             'status' => 'active',
             'type' => $type,
             'contact' => $cnum,
-            'username' => $uname,
+            //'username' => $uname,
             'profilepic' => $file,
             'rfid' 		=> ''
         );

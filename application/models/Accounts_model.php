@@ -5,15 +5,15 @@ class Accounts_model extends CI_Model{
         $this->transTable = 'user';
     }
 
-    public function login($uname,$password){
-        $this->db->where('username', $uname);
+    public function login($sid,$password){
+        $this->db->where('school_id', $sid);
         $this->db->where('password', $password);
         $this->db->where('status', 'active');
         return $this->db->count_all_results($this->transTable); 
   	}
 
-  	public function login_get_user($uname,$password){
-        $query = $this->db->get_where($this->transTable, array('username' => $uname, 'password' => $password));
+  	public function login_get_user($sid,$password){
+        $query = $this->db->get_where($this->transTable, array('school_id' => $sid, 'password' => $password));
         return $query->result();
  	}
 

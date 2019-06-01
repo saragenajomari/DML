@@ -67,8 +67,8 @@ function disableClass(id){
                 <td><?php echo $data_class_info['day'];  ?></td>
                 <td><?php echo $data_class_info['fname'].' '.$data_class_info['lname']; ?></td>
                 <td><a href="<?php echo site_url('Pages/check_class_page/'.$data_class_info['id']); ?>"><button class="btn btn-primary"><i class="fa fa-folder-open-o"></i></button></a></td>
-                <td><a href="<?php echo site_url('Pages/edit_class_page/'.$data_class_info['id']); ?>"><button class="btn btn-warning" name="Edit"><i class="fa fa-cogs"></i></button></a></td>
-                <td><button class="btn btn-danger" id="<?php echo $data_class_info['id']; ?>" onclick="disableClass(this.id)"><i class="fa fa-trash-o"></i></button></td>   
+                <td><a <?php if($data_class_info['flag']){echo "style='display:none'";} ?> href="<?php echo site_url('Pages/edit_class_page/'.$data_class_info['id']); ?>"><button class="btn btn-warning" name="Edit"><i class="fa fa-cogs"></i></button></a></td>
+                <td><button <?php if($data_class_info['flag']){echo "style='display:none'";} ?> class="btn btn-danger" id="<?php echo $data_class_info['id']; ?>" onclick="disableClass(this.id)"><i class="fa fa-trash-o"></i></button></td>   
             </tr>
         <?php } ?>   
         </tbody>

@@ -92,12 +92,12 @@
             </div>
         </div><br><br>
 
-        <div class="form-group">
+        <!--<div class="form-group">
             <label for="username" class="col-md-3 control-label">User Name</label>
             <div class="col-md-9">
                 <input type="text" class="form-control" name="uname" id="uname" placeholder="[Last name][First 3 letters of first name]">
             </div>
-        </div><br><br>
+        </div><br><br>-->
 
         <div class="form-group">
             <label for="password" class="col-md-3 control-label">Password</label>
@@ -147,7 +147,7 @@
     var ready_fname = 0;
     var ready_mname = 0;
     var ready_lname = 0;
-    var ready_uname = 0;
+    //var ready_uname = 0;
     var ready_password = 0;
     var ready_email = 0;
     var ready_cnum = 0;
@@ -269,7 +269,7 @@
         }
     });     
 
-    $("#uname").keyup(function(event){
+    /*$("#uname").keyup(function(event){
         var uname = $("input#uname").val();
         var lname = $("input#lname").val();
         var fname = $("input#fname").val();
@@ -295,7 +295,7 @@
             document.getElementById('uname').style.borderColor = "red";
             ready_uname = 0;
         }
-    }); 
+    }); */
 
     $("#password").keyup(function(event){
         var password = $("input#password").val();
@@ -345,7 +345,7 @@
 
     $(document).keyup( function(event) {
     //if (event.which === 13) {
-        if (ready_id == 1 && ready_mname == 1 && ready_uname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cnum == 1 && ready_file == 1 && read_type == 1) {
+        if (ready_id == 1 && ready_mname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cnum == 1 && ready_file == 1 && read_type == 1) {
             $("#submit").attr("disabled", false);
         }else{
             $("#submit").attr("disabled", true);
@@ -359,7 +359,7 @@
 
     $(document).change( function(event) {
     //if (event.which === 13) {
-        if (ready_id == 1 && ready_mname == 1 && ready_uname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cnum == 1 && ready_file == 1 && read_type == 1) {
+        if (ready_id == 1 && ready_mname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cnum == 1 && ready_file == 1 && read_type == 1) {
             $("#submit").attr("disabled", false);
         }else{
             $("#submit").attr("disabled", true);

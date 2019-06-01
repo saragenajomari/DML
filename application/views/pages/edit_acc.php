@@ -7,7 +7,7 @@
             var fname = $("input#fname").val();
             var mname = $("input#mname").val();
             var lname = $("input#lname").val();
-            var uname = $("input#uname").val();
+            //var uname = $("input#uname").val();
             var password = $("input#password").val();
             var email = $("input#email").val();
             var cnum = $("input#cnum").val();
@@ -26,7 +26,7 @@
                 $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>index.php/Accounts/do_edit_account",
-                data: {id_num:id_num,fname:fname,mname:mname,lname:lname,uname:uname,password:password,email:email,cnum:cnum,file:file},
+                data: {id_num:id_num,fname:fname,mname:mname,lname:lname,password:password,email:email,cnum:cnum,file:file},
                 success: function(data){
                     if (data) {
                         swal("Poof! This Account has been updated!", {
@@ -80,12 +80,12 @@
                     </div>
                 </div><br><br>
 
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label for="username" class="col-md-3 control-label">User Name</label>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="uname" id="uname" value="<?php echo $data_info->username; ?>" disabled>
+                        <input type="text" class="form-control" name="uname" id="uname" value="<?php //echo $data_info->username; ?>" disabled>
                      </div>
-                </div><br><br>
+                </div><br><br>-->
 
                 <div class="form-group">
                     <label for="password" class="col-md-3 control-label">Password</label>
@@ -129,7 +129,7 @@
     var ready_fname = 1;
     var ready_mname = 1;
     var ready_lname = 1;
-    var ready_uname = 1;
+    //var ready_uname = 1;
     var ready_password = 1;
     var ready_email = 1;
     var ready_cnum = 1;
@@ -229,7 +229,7 @@
         }
     });     
 
-    $("#uname").keyup(function(event){
+    /*$("#uname").keyup(function(event){
         var uname = $("input#uname").val();
         var lname = $("input#lname").val();
         var fname = $("input#fname").val();
@@ -255,7 +255,7 @@
             document.getElementById('uname').style.borderColor = "red";
             ready_uname = 0;
         }
-    }); 
+    }); */
 
     $("#password").keyup(function(event){
         var password = $("input#password").val();
@@ -305,7 +305,7 @@
 
     $(document).keyup( function(event) {
     //if (event.which === 13) {
-        if (ready_id == 1 && ready_mname == 1 && ready_uname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cnum == 1) {
+        if (ready_id == 1 && ready_mname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cnum == 1) {
             $("#submit").attr("disabled", false);
         }else{
             $("#submit").attr("disabled", true);

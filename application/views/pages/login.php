@@ -1,3 +1,27 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+     <title>USC TC: AutoLab</title>
+     <!-- Latest compiled and minified CSS -->
+
+    <!--SweetAlert-->
+    <script src="https://code.jquery.com/jquery-3.4.0.js" crossorigin="anonymous"></script> 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
+    <!--Sweet Alert-->
+
+    <!--datatables js-->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
+   
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/fonts/glyphicons-halflings-regular.woff2" >
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/fonts/glyphicons-halflings-regular.woff" >
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/fonts/glyphicons-halflings-regular.ttf" >
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-theme.min.css" >
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/login.css" >
+</head>
 <script type="text/javascript">
 
      $(document).ready(function(event){
@@ -41,13 +65,13 @@
             });
 
         $('#loginBtn').click(function(e) {
-            var unameLogin = $('#unameLogin').val();
+            var unameLogin = $('#sid').val();
             var passwordLogin = $('#passwordLogin').val();
 
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>index.php/Accounts/login",
-                data: {uname:unameLogin,password:passwordLogin},
+                data: {sid:unameLogin,password:passwordLogin},
                 success: function(data){
                     if (data!=0) {
                         swal({
@@ -104,7 +128,7 @@
                                     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="span-login input-group-addon"><i class="glyph-login glyphicon glyphicon-user"></i></span>
-                                        <input type="text" class="form-control" name="unameLogin" id="unameLogin" placeholder="Username">                                        
+                                        <input type="number" class="form-control" name="sid" id="sid" placeholder="ID Number">                                        
                                     </div>
                                 
                             <div style="margin-bottom: 25px" class="input-group">
@@ -181,12 +205,12 @@
                                         <input type="text" class="form-control" name="lname" id="lname" placeholder="Last Name">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label for="username" class="col-md-3 control-label">User Name</label>
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" name="uname" id="uname" placeholder="[Last name][First 3 letters of first name]">
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label for="password" class="col-md-3 control-label">Password</label>
                                     <div class="col-md-9">
@@ -243,7 +267,7 @@
     var ready_fname = 0;
     var ready_mname = 0;
     var ready_lname = 0;
-    var ready_uname = 0;
+    //var ready_uname = 0;
     var ready_password = 0;
     var ready_cpassword = 0;
     var ready_email = 0;
@@ -353,7 +377,7 @@
         }
     });     
 
-    $("#uname").keyup(function(event){
+    /*$("#uname").keyup(function(event){
         var uname = $("input#uname").val();
         var lname = $("input#lname").val();
         var fname = $("input#fname").val();
@@ -379,7 +403,7 @@
             document.getElementById('uname').style.borderColor = "red";
             ready_uname = 0;
         }
-    }); 
+    }); */
 
     $("#password").keyup(function(event){
         var password = $("input#password").val();
@@ -441,7 +465,7 @@
 
     $(document).keyup( function(event) {
     //if (event.which === 13) {
-        if (ready_id == 1 && ready_mname == 1 && ready_uname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cpassword == 1 && ready_cnum == 1 && ready_file == 1) {
+        if (ready_id == 1 && ready_mname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cpassword == 1 && ready_cnum == 1 && ready_file == 1) {
             $("#submit").attr("disabled", false);
         }else{
             $("#submit").attr("disabled", true);
@@ -455,7 +479,7 @@
 
     $(document).change( function(event) {
     //if (event.which === 13) {
-        if (ready_id == 1 && ready_mname == 1 && ready_uname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cpassword == 1 && ready_cnum == 1 && ready_file == 1) {
+        if (ready_id == 1 && ready_mname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cpassword == 1 && ready_cnum == 1 && ready_file == 1) {
             $("#submit").attr("disabled", false);
         }else{
             $("#submit").attr("disabled", true);

@@ -10,7 +10,7 @@ class Pages extends CI_Controller {
 	public function index()
 	{
 		$this->load->helper('form');
-		$this->load->view('includes/header');
+		//$this->load->view('includes/header');
 		$this->load->view('pages/login');
 		$this->load->view('includes/footer');
 
@@ -68,6 +68,13 @@ class Pages extends CI_Controller {
 		$id = $_SESSION['uid'];
 		$data['info'] = $this->Accounts_model->get_user($id);
 
+		$data['constant'] =$this->Constants_model->get_constant();
+		foreach ($data['constant'] as $cons) {
+			$semester 		= $cons->semester; //make this dynamic 
+			$acadYr			= $cons->acadYr; //make this dynamic
+			$acadYr_end		= $cons->acadYr_end;
+		}
+
 		//to get clases with teachers name
 		$data['class'] = $this->Classes_model->get_classes();
 		foreach ($data['class'] as $data_class) {
@@ -91,6 +98,15 @@ class Pages extends CI_Controller {
           	foreach ($data['teacher'] as $data_teacher) {
           		$arr[$i]['fname'] = $data_teacher->fname;
           		$arr[$i]['lname'] = $data_teacher->lname;
+          	}
+          	if ($semester == $data_class->semester) {
+          		if ($acadYr != $data_class->acadYr) {
+          			$arr[$i]['flag'] = TRUE;
+          		}else{
+          			$arr[$i]['flag'] = FALSE;
+          		}
+          	}else{
+          		$arr[$i]['flag'] = TRUE;
           	}
           	$i++;
 		}
@@ -121,6 +137,13 @@ class Pages extends CI_Controller {
 		$arr=array();
 		$id = $_SESSION['uid'];
 		$data['info'] = $this->Accounts_model->get_user($id);
+
+		$data['constant'] =$this->Constants_model->get_constant();
+		foreach ($data['constant'] as $cons) {
+			$semester_con 		= $cons->semester; //make this dynamic 
+			$acadYr_start			= $cons->acadYr; //make this dynamic
+			$acadYr_end		= $cons->acadYr_end;
+		}
 		
 		$data['class_details'] = $this->Classes_model->get_class_by_id($cid);
 		foreach ($data['class_details'] as $data_class_details) {
@@ -130,6 +153,15 @@ class Pages extends CI_Controller {
 		 	$semester = $data_class_details->semester;
 		 	$arr[0]['semester'] = $semester;
 		 	$arr[0]['pname'] = $data_class_details->pname;
+		 	if ($semester_con == $data_class_details->semester) {
+          		if ($acadYr_start != $data_class_details->acadYr) {
+          			$arr[0]['flag'] = TRUE;
+          		}else{
+          			$arr[0]['flag'] = FALSE;
+          		}
+          	}else{
+          		$arr[0]['flag'] = TRUE;
+          	}
 		} 
 		$data['array']=$arr;
 
@@ -139,6 +171,15 @@ class Pages extends CI_Controller {
 
 		foreach ($data['class_master_list'] as $data_details) {
 			$arr2[$i]['lid'] = $data_details->id;
+			if ($semester_con == $data_details->semester) {
+          		if ($acadYr_start != $data_details->acadYr) {
+          			$arr2[$i]['flag'] = TRUE;
+          		}else{
+          			$arr2[$i]['flag'] = FALSE;
+          		}
+          	}else{
+          		$arr2[$i]['flag'] = TRUE;
+          	}
 			$data['student'] = $this->Accounts_model->get_user($data_details->student);
 			foreach ($data['student'] as $data_student) {
 				$arr2[$i]['id'] = $data_student->id;
@@ -779,7 +820,8 @@ class Pages extends CI_Controller {
             $_SESSION['fname'],
             $_SESSION['lname'],
             $_SESSION['mname'],
-            $_SESSION['type']
+            $_SESSION['type'],
+            $_SESSION['logged_in']
             );
         session_destroy();
         redirect('pages/index');

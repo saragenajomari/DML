@@ -93,11 +93,12 @@ function deleteMember(id){
 <div class="user-dashboard">
     <?php foreach ($array as $data_array_one) { ?>
 	<h1 id="hdr-acc"><?php echo $data_array_one['pname'];  ?></h1>
-    <?php } ?>
+   
 	<div id="btn-add-acc">  
     <li class="hidden-xs">                        
-	<a href="#" data-toggle="modal" data-target="#add_project"><button class="btn btn-primary hidden-xs" ><i class="fa fa-plus-circle"></i> Add Student</button></a>
+	<a href="#" <?php if($data_array_one['flag']){echo "style='display:none'";} ?> data-toggle="modal" data-target="#add_project"><button class="btn btn-primary hidden-xs" ><i class="fa fa-plus-circle"></i> Add Student</button></a>
     </li>
+     <?php } ?>
 	</div>
 	<div class="">
 	<table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -119,7 +120,7 @@ function deleteMember(id){
                 <td><?php echo $data_array_two['fname']; ?></td>
                 <td><?php echo $data_array_two['mname']; ?></td>
                 <td><?php echo $data_array_two['lname']; ?></td>
-                <td><button onclick="deleteMember(this.id)" id="<?php echo $data_array_two['lid']; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>   
+                <td><button <?php if($data_array_two['flag']){echo "disabled";} ?> onclick="deleteMember(this.id)" id="<?php echo $data_array_two['lid']; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>   
             </tr>
          <?php } ?>
         </tbody>
