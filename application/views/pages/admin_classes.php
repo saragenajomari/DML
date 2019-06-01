@@ -62,7 +62,7 @@ function disableClass(id){
         		<td><?php echo $data_class_info['ccode'];  ?></td>
         		<td><?php echo $data_class_info['grpNo'];  ?></td>
                 <td><?php echo $data_class_info['semester'];  ?></td>
-                <td><?php echo $data_class_info['acadYr'];  ?></td>
+                <td><?php echo $data_class_info['acadYr'].'-'.$data_class_info['acadYr_end'];  ?></td>
                 <td><?php echo $data_class_info['ts'].'-'.$data_class_info['te']; ?></td>
                 <td><?php echo $data_class_info['day'];  ?></td>
                 <td><?php echo $data_class_info['fname'].' '.$data_class_info['lname']; ?></td>

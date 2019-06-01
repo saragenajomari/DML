@@ -15,8 +15,9 @@ class Classes extends CI_Controller {
 		$pname	= $_POST['pname'];
 		$data['constant'] =$this->Constants_model->get_constant();
 		foreach ($data['constant'] as $cons) {
-			$semester 		= $cons->semester; //make this dynamic 
-			$acadYr			= $cons->acadYr; //make this dynamic
+			$semester 		= $cons->semester; 
+			$acadYr			= $cons->acadYr;
+			$acadYr_end		= $cons->acadYr_end;
 		}
 
 		$classdata = array(
@@ -24,6 +25,7 @@ class Classes extends CI_Controller {
             'grpNo' => $grpNo,
             'semester' => $semester,
             'acadYr' => $acadYr,
+            'acadYr_end' => $acadYr_end,
             'time_start' => $ts,
             'time_end' => $te,
             'teacher' => $teacher,
@@ -52,6 +54,7 @@ class Classes extends CI_Controller {
 		foreach ($data['constant'] as $cons) {
 			$semester 		= $cons->semester; //make this dynamic 
 			$acadYr			= $cons->acadYr; //make this dynamic
+			$acadYr_end		= $cons->acadYr_end;
 		}
 
 		$classdata = array(
@@ -59,6 +62,7 @@ class Classes extends CI_Controller {
             'grpNo' => $grpNo,
             'semester' => $semester,
             'acadYr' => $acadYr,
+            'acadYr_end' => $acadYr_end,
             'time_start' => $ts,
             'time_end' => $te,
             'teacher' => $teacher,

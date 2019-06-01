@@ -45,6 +45,11 @@ class Ordr_model extends CI_Model{
         return $query->result();
     }
 
+    public function get_completed_order(){
+        $query = $this->db->get_where($this->transTable, array('flag' => 0,'status'=>'returned'));
+        return $query->result();
+    }
+
     public function deleteOrdr($id){
         $this->db->set('status', 'removed');
         $this->db->where('id', $id);

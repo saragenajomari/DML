@@ -22,6 +22,7 @@
                         <li><a href="<?php echo site_url('Pages/staff_approved_order_page'); ?>"><i class="fa fa-shopping-basket"></i><span class="hidden-xs hidden-sm">Dispense Items</span></a></li>
                         <li><a href="<?php echo site_url('Pages/staff_return_order_page'); ?>"><i class="fa fa-retweet"></i><span class="hidden-xs hidden-sm">Return Items</span></a></li>
                         <li><a href="<?php echo site_url('Pages/staff_broken_item_page'); ?>"><i class="fa fa-exclamation-triangle"></i><span class="hidden-xs hidden-sm">Damaged Items</span></a></li>
+                        <li><a href="<?php echo site_url('Pages/staff_completed_order_page'); ?>"><i class="fa fa-check-square"></i><span class="hidden-xs hidden-sm">Completed Orders</span></a></li>
                     </ul>
                 </div>
             </div>

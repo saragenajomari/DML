@@ -82,6 +82,7 @@ class Pages extends CI_Controller {
           		$arr[$i]['semester'] = 'Summer';
           	}	
           	$arr[$i]['acadYr'] = $data_class->acadYr;
+          	$arr[$i]['acadYr_end'] = $data_class->acadYr_end;
           	$arr[$i]['grpNo'] = $data_class->grpNo;
           	$arr[$i]['day'] = $data_class->day;
           	$arr[$i]['ts'] = $data_class->time_start;
@@ -340,27 +341,36 @@ class Pages extends CI_Controller {
 
 		$data['orders'] = $this->Ordr_model->get_order_by_status();
 		foreach($data['orders'] as $orders){
-			$data['order_item'] = $this->Order_items_model->get_item_by_order($orders->id);
-			foreach ($data['order_item'] as $order_items) {
-				$data['item_details'] = $this->Items_model->get_item($order_items->item);
-				foreach ($data['item_details'] as $details) {
-					$arr1[$i][$j]['item_name']	=	$details->item_name;
+			//newly added
+			$data['class_det'] = $this->Classes_model->get_class_by_id($orders->class);
+			foreach ($data['class_det'] as $det) {
+				if ($det->teacher == $id) {
+					//newly added
+					$data['order_item'] = $this->Order_items_model->get_item_by_order($orders->id);
+					foreach ($data['order_item'] as $order_items) {
+						$data['item_details'] = $this->Items_model->get_item($order_items->item);
+						foreach ($data['item_details'] as $details) {
+							$arr1[$i][$j]['item_name']	=	$details->item_name;
+						}
+						$arr1[$i][$j]['quantity']	=	$order_items->quantity;
+						$j++;
+					}
+					$data['class'] = $this->Classes_model->get_class_by_id($orders->class);
+					foreach ($data['class'] as $class) {
+						$arr[$i]['class_name']	=	$class->pname;
+					}
+					$data['student'] = $this->Accounts_model->get_user($orders->student);
+					foreach ($data['student'] as $student) {
+						$arr[$i]['student_name']	=	$student->fname.' '.$student->lname;
+						$arr[$i]['id']				=	$student->school_id;
+					}
+					$arr[$i]['date_ordered'] = $orders->date_ordered;
+					$arr[$i]['oid'] = $orders->id;
+					$i++;
+				//newly added	
 				}
-				$arr1[$i][$j]['quantity']	=	$order_items->quantity;
-				$j++;
 			}
-			$data['class'] = $this->Classes_model->get_class_by_id($orders->class);
-			foreach ($data['class'] as $class) {
-				$arr[$i]['class_name']	=	$class->pname;
-			}
-			$data['student'] = $this->Accounts_model->get_user($orders->student);
-			foreach ($data['student'] as $student) {
-				$arr[$i]['student_name']	=	$student->fname.' '.$student->lname;
-				$arr[$i]['id']				=	$student->school_id;
-			}
-			$arr[$i]['date_ordered'] = $orders->date_ordered;
-			$arr[$i]['oid'] = $orders->id;
-			$i++;
+			//newly added
 		}
 
 		$data['array'] = $arr;
@@ -686,6 +696,78 @@ class Pages extends CI_Controller {
 		$this->load->view('includes/header');
 		$this->load->view('includes/navbar_staff',$data);
 		$this->load->view('pages/broken_order_items',$data);
+		$this->load->view('includes/footer');
+	}
+
+	public function staff_completed_order_page(){
+		$i=0;
+		$j=0;
+		$arr=array();
+		$arr1=array();
+		$id = $_SESSION['uid'];
+		$data['info'] = $this->Accounts_model->get_user($id);
+
+		$data['orders'] = $this->Ordr_model->get_completed_order();
+		foreach($data['orders'] as $orders){
+
+			$data['class'] = $this->Classes_model->get_class_by_id($orders->class);
+			foreach ($data['class'] as $class) {
+				$arr[$i]['class_name']	=	$class->pname;
+				$arr[$i]['acadYr']		=	$class->acadYr;
+				$arr[$i]['acadYr_end']	=	$class->acadYr_end;
+				$arr[$i]['semester']	=	$class->semester;
+				$arr[$i]['grpNo']	=	$class->grpNo;
+				$data['teacher'] = $this->Accounts_model->get_user($class->teacher);
+				foreach ($data['teacher'] as $teacher) {
+					$arr[$i]['teacher_name']	=	$teacher->fname.' '.$teacher->lname;	
+				}
+			}
+			$data['student'] = $this->Accounts_model->get_user($orders->student);
+			foreach ($data['student'] as $student) {
+				$arr[$i]['student_name']	=	$student->fname.' '.$student->lname;
+				$arr[$i]['id']				=	$student->school_id;
+			}
+			$arr[$i]['date_approved'] = $orders->date_approved;
+			$arr[$i]['date_dispensed'] = $orders->date_dispensed;
+			$arr[$i]['date_returned'] = $orders->date_returned;
+			$arr[$i]['oid'] = $orders->id;
+			$arr[$i]['status']	= $orders->status;
+			$i++;
+		}
+
+		$data['array'] = $arr;
+		$data['array1'] = $arr1;
+
+		$this->load->view('includes/header');
+		$this->load->view('includes/navbar_staff',$data);
+		$this->load->view('pages/completed_orders',$data);
+		$this->load->view('includes/footer');
+	}	
+
+	public function staff_check_completed_page($oid){
+		$j=0;
+		$arr1=array();
+		$id = $_SESSION['uid'];
+		$data['info'] = $this->Accounts_model->get_user($id);
+
+		$data['order_item'] = $this->Order_items_model->get_item_by_order_flag_0($oid);
+		foreach ($data['order_item'] as $order_items) {
+			$data['item_details'] = $this->Items_model->get_item($order_items->item);
+			foreach ($data['item_details'] as $details) {
+				$arr1[$j]['item_name']	=	$details->item_name;
+				$arr1[$j]['item_code']	=	$details->item_code;
+				$arr1[$j]['item_id']	=	$details->id;
+			}
+			$arr1[$j]['oiid']	=	$order_items->id;
+			$arr1[$j]['quantity']	=	$order_items->quantity;
+			$j++;
+		}
+
+		$data['array1'] = $arr1;
+
+		$this->load->view('includes/header');
+		$this->load->view('includes/navbar_staff',$data);
+		$this->load->view('pages/completed_order_items',$data);
 		$this->load->view('includes/footer');
 	}
 

@@ -359,7 +359,7 @@
 
     $(document).change( function(event) {
     //if (event.which === 13) {
-        if (ready_id == 1 && ready_mname == 1 && ready_uname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cpassword == 1 && ready_cnum == 1 && ready_file == 1 && read_type == 1) {
+        if (ready_id == 1 && ready_mname == 1 && ready_uname == 1 && ready_password == 1 && ready_email == 1 && ready_lname == 1 && ready_fname == 1 && ready_cnum == 1 && ready_file == 1 && read_type == 1) {
             $("#submit").attr("disabled", false);
         }else{
             $("#submit").attr("disabled", true);

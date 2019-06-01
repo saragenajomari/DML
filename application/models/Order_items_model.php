@@ -95,5 +95,15 @@ class Order_items_model extends CI_Model{
         $this->db->where('flag', 1);
         return $this->db->count_all_results($this->transTable); 
     }
+
+    public function get_item_by_order_complete($oid){
+        $query = $this->db->get_where($this->transTable, array('ordr'=>$oid,'flag'=>0,'status'=>'returned'));
+        return $query->result();
+    }
+
+    public function get_item_by_order_flag_0($oid){
+        $query = $this->db->get_where($this->transTable, array('ordr'=>$oid,'status'=>'returned','flag'=>0));
+        return $query->result();
+    }
 }
 ?>
