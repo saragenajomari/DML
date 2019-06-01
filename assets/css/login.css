@@ -1,0 +1,12 @@
+.header{
+    background-color:#0e1a35;
+    color: #fff;
+    padding: 1em;
+}
+.panel{
+    border: 1px solid #0e1a35;
+}
+.panel-body{
+   padding-top:30px;
+}
+

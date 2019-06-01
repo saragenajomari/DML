@@ -1,0 +1,25 @@
+#form-input-class{
+	
+	float: left;
+	width: 15em;
+	margin-right: 2em;
+	margin-bottom: 2em;
+	}
+
+#form-input-div{
+	
+	margin-right:0;
+	width: 15em;
+}
+
+#form-label-class{
+	 
+	width:15em;
+}
+
+#add-class-btn{
+	
+	float: right;
+	margin-top: 10em;
+	margin-right: 9em;
+}
