@@ -26,6 +26,10 @@ swal({
 } 
 
 function new_semester(){
+
+    var rpass = $("input#rpass").val();
+    var nrpass = $("input#nrpass").val();
+
     swal({
         title: "YOU ARE ABOUT TO START A NEW SEMESTER?",
         text: "Warning! Action Irrevesible!",
@@ -37,6 +41,7 @@ function new_semester(){
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url(); ?>index.php/Constants/new_semester",
+                data: {rpass:rpass,nrpass:nrpass},
                 success: function(data){
                     if (data == 1) {
                         swal({
@@ -49,8 +54,8 @@ function new_semester(){
                                 window.location.href = "<?php echo base_url();?>index.php/Pages/admin_home_page";
                             }
                         });
-                    }else{
-                        swal("Oopps! Something went wrong!", {
+                    }else if(data==0){
+                        swal("Sorry! Wrong password", {
                         icon: "error",
                         });
                     }               
@@ -84,7 +89,7 @@ function new_semester(){
             <p>Current Semester: <strong><?php echo $semester;  ?></strong></p><br>
             <p>Current Academic Year: <strong><?php echo $data->acadYr.'-'.$data->acadYr_end;  ?></strong></p><br>
             
-            <button class="btn btn-danger" type="button"  onclick="new_semester()">START NEW SEMESTER</button>
+            <a href="#" data-toggle="modal" data-target="#add_code"><button class="btn btn-danger" type="button">START NEW SEMESTER</button></a>
             <?php } ?>
         </div>
     </div>
@@ -94,4 +99,27 @@ function new_semester(){
 <!--Dont delete these 3 divs -->
 </div>
 </div>
+</div>
+
+<div id="add_code" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header login-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Reset Password</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="uid" id="uid" value="">
+                    <input class="form-control" type="password" name="rpass" id="rpass" value="" placeholder="Old password">
+                    <input class="form-control" type="password" name="nrpass" id="nrpass" value="" placeholder="New password">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="new_semester()" data-dismiss="modal">Reset</button> 
+                </div>
+            </div>
+
+        </div>
 </div>

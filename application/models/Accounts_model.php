@@ -83,5 +83,11 @@ class Accounts_model extends CI_Model{
         $query = $this->db->get_where($this->transTable, array('type' => 'student'));
         return $query->result();
     }
+
+    public function check_pending($id){
+        $this->db->where('id', $id);
+        $this->db->where('status', 'pending');
+        return $this->db->count_all_results($this->transTable); 
+    }
 }
 ?>

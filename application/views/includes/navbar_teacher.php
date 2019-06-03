@@ -17,8 +17,8 @@
                 </div>
                 <div class="navi">
                     <ul>
-                        <li class="active"><a href="<?php echo site_url('Pages/teacher_home_page'); ?>"><i class="fa fa-check-square-o"></i><span class="hidden-xs hidden-sm">Pending Orders</span></a></li>  
-                        <li class="active"><a href="<?php echo site_url('Pages/approved_orders_page'); ?>"><i class="fa fa-check-square"></i><span class="hidden-xs hidden-sm">Approved Orders</span></a></li> 
+                        <li class=""><a href="<?php echo site_url('Pages/teacher_home_page'); ?>"><i class="fa fa-check-square-o"></i><span class="hidden-xs hidden-sm">Pending Orders</span></a></li>  
+                        <li class=""><a href="<?php echo site_url('Pages/approved_orders_page'); ?>"><i class="fa fa-check-square"></i><span class="hidden-xs hidden-sm">Approved Orders</span></a></li> 
                     </ul>
                 </div>
             </div>

@@ -21,7 +21,7 @@ $.ajax({
         }else{
         swal({
             title: "Failed!",
-            text: "Doesnt have enough stock on the requested item or something went wrong. Try again or contact administrator",
+            text: "Doesnt have enough stock on the requested item or value is unacceptable. Try again or contact administrator",
             icon: "error",
             button: "Continue",
         }).then(function(isConfirm){
@@ -32,6 +32,19 @@ $.ajax({
 });
 
 }
+
+function check(id){
+   
+    var quantity_limit = $("input#quan"+id).val();
+    var quantity = $("input#"+id).val();
+    if (quantity > quantity_limit) {
+        document.getElementById(id).style.borderColor = "red";
+    }else if (quantity <= 0) {
+        document.getElementById(id).style.borderColor = "red";
+    }else{
+        document.getElementById(id).style.borderColor = "green";
+    }
+}
 </script>
 <div class="user-dashboard">
 	<h1 id="hdr-acc">Add Quantity</h1>
@@ -40,14 +53,17 @@ $.ajax({
 	</div>
 	<div class="">
         <div class="form-add col-md-6" >
-    <form id="myform" class="myform" method="post" name="myform">        
+    <form id="myform" class="myform" method="post" name="myform">    
+    <br>    
     <?php foreach ($array as $details) { ?>
         <div class="form-group">
-        <label for="id_num" class="col-md-3 control-label"><?php echo $details['item_name']; ?></label>
-        <p style="float:left; margin:1em 0em 0em 2em;">X</p>
-            <div style="float:left;" class="col-md-8">
+        <label for="id_num" class="col-md-6 control-label"><?php echo $details['item_name']; ?></label>
+        
+            <div class="col-md-3">
                 <input type="hidden" name="id_list[]" value="<?php echo $details['id']; ?>">
-                <input class="form-control" type="number" name="quan_list[]" value = "<?php if($details['quantity'] == 1){ echo $details['quantity']; } ?>"> 
+                <input class="form-control" type="number" id="<?php echo $details['id']; ?>" name="quan_list[]" min="1" max="<?php echo $details['quantity']; ?>" value="" onkeyup="check(this.id)"> 
+
+                <input type="hidden" id="quan<?php echo $details['id']; ?>" value="<?php echo $details['quantity']; ?>">
             </div>
         </div><br>
     <?php } ?>
@@ -55,7 +71,8 @@ $.ajax({
     <input type="hidden" name="cid" value="<?php echo $data_details->id; ?>">   
     <?php } ?>
     </form>
-    <button type="button" class="btn btn-success" onclick="submitForm()">Submit</button>
+   
+    <button id="smbt" type="button" class="btn btn-success" onclick="submitForm()">Submit</button>
         </div>
     </div>
     <div id="myResponse"></div>

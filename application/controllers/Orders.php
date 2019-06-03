@@ -54,7 +54,11 @@ class Orders extends CI_Controller {
 				if ($quan>$item_det->quantity) {
 					$check = 1;
 				}else{
-					$arr1[$j]['quan'] = $quan;
+					if ($quan==0) {
+						$check = 1;
+					}else{
+						$arr1[$j]['quan'] = $quan;
+					}	
 				}
 			}
 			$j++;
@@ -138,7 +142,50 @@ class Orders extends CI_Controller {
 		    $oid = $_POST['oid'];
 		    $date = date("Y-m-d");
 			$status_two = $this->Ordr_model->updateOrdr($oid,$date);
-        	echo $status_two;
+
+			if ($status_two) {
+
+			$item_list='';
+			$data['ordr_details']=$this->Ordr_model->get_order_by_ordr($oid);
+			foreach ($data['ordr_details'] as $data_ordr) {
+			$data['class_details'] = $this->Classes_model->get_class_by_id($data_ordr->class);
+				foreach ($data['class_details'] as $data_class) {
+					$ccode = $data_class->ccode;
+					$grpNo = $data_class->grpNo;
+					if ($data_class->semester == 1) {
+						$semester = '1st';
+					}elseif ($data_class->semester == 2) {
+						$semester = '2nd';
+					}else{
+						$semester = 'Summer';
+					}
+					$acadYr = $data_class->acadYr;
+					$acadYr_end = $data_class->acadYr_end;
+				}	
+				$data['student_details'] = $this->Accounts_model->get_user($data_ordr->student);
+				foreach ($data['student_details'] as $data_student) {
+					$sname = $data_student->fname.' '.$data_student->mname.' '.$data_student->lname;
+					$sid   = $data_student->school_id;
+					$email = $data_student->email;
+				}
+			}
+
+			$data['approved_batch'] = $this->Order_items_model->get_item_by_order($oid);
+			foreach ($data['approved_batch'] as $approved_data) {
+				$data['item_detail'] = $this->Items_model->get_item($approved_data->item);
+				foreach ($data['item_detail'] as $detail_item) {
+					$item_name = $detail_item->item_name;
+				}
+				$item_list .= '<strong>'.$item_name.'</strong> x<strong>'.$approved_data->quantity.'</strong><br>';
+			}
+
+			$subject = 'USC DML: Approved Order';
+			$message = '<p>Hello <strong>'.$sname.'</strong> ('.$sid.'),<br><br> This is from DML, reminding you that your order has been approved, under this order are these item(s):<br>'.$item_list.'In the Class: <strong>'.$ccode.'</strong> Group: <strong>'.$grpNo.'</strong> of the <strong>'.$semester.' semester</strong> of Academic Year: <strong>'.$acadYr.'-'.$acadYr_end.'</strong><br> You can get your item(s) on the counter inside the laboratory during the class schedule.<br><br><br> USC TC Autolab.</p>';
+
+			$catch = $this->send_email($subject,$message,$email);
+			echo $catch;
+		}
+
 		} elseif ($err == 1) {
 			echo 2;
 		} elseif ($err == 0 && $flag == 1) {
@@ -202,7 +249,14 @@ class Orders extends CI_Controller {
 
 			if ($flag == 1) {
 				$date = date("Y-m-d");
-				$order_status = $this->Ordr_model->updateOrdr_return($oid,$date);
+				$check_broken = $this->Order_items_model->count_broken_order($oid);
+				if ($check_broken > 0) {
+					$order_status = $this->Ordr_model->updateOrdr_return_broken($oid,$date);
+					//from here
+					$this->email_details($oid);
+				}else{
+					$order_status = $this->Ordr_model->updateOrdr_return($oid,$date);
+				}
 				echo 1;
 			}else{
 				echo 2;
@@ -301,14 +355,8 @@ class Orders extends CI_Controller {
 				}
 				$item_list .= '<strong>'.$item_name.'</strong> x<strong>'.$broken_data->quantity.'</strong><br>';
 			}
-		$catch = $this->send_email($item_list,$ccode,$grpNo,$acadYr,$semester,$sname,$sid,$date_notify,$email);
-		return $catch;
-	}
+		//$catch = $this->send_email($item_list,$ccode,$grpNo,$acadYr,$semester,$sname,$sid,$date_notify,$email);
 
-	public function send_email($item_list,$ccode,$grpNo,$acadYr,$semester,$sname,$sid,$date_notify,$email){
-		
-		$this->load->library('email');
-		
 		$data['constant'] =$this->Constants_model->get_constant();
 		foreach ($data['constant'] as $cons) {
 			$acadYr_end			= $cons->acadYr_end; 
@@ -316,6 +364,22 @@ class Orders extends CI_Controller {
 
 		$subject = 'USC DML: Student Notification';
 		$message = '<p>Hello <strong>'.$sname.'</strong> ('.$sid.'),<br><br> This is from DML, reminding you that you have possibly damaged/lost this item(s):<br>'.$item_list.'On <strong>'.$date_notify.'</strong> during the Class: <strong>'.$ccode.'</strong> Group: <strong>'.$grpNo.'</strong> of the <strong>'.$semester.' semester</strong> of Academic Year: <strong>'.$acadYr.'-'.$acadYr_end.'</strong><br> Please settle this matter at the DML office as soon as possible to avoid reprecusions.<br><br><br> USC TC Autolab.</p>';
+
+		$catch = $this->send_email($subject,$message,$email);	
+		return $catch;
+	}
+
+	public function send_email($subject,$message,$email){
+		
+		$this->load->library('email');
+		
+		/*$data['constant'] =$this->Constants_model->get_constant();
+		foreach ($data['constant'] as $cons) {
+			$acadYr_end			= $cons->acadYr_end; 
+		}
+
+		$subject = 'USC DML: Student Notification';
+		$message = '<p>Hello <strong>'.$sname.'</strong> ('.$sid.'),<br><br> This is from DML, reminding you that you have possibly damaged/lost this item(s):<br>'.$item_list.'On <strong>'.$date_notify.'</strong> during the Class: <strong>'.$ccode.'</strong> Group: <strong>'.$grpNo.'</strong> of the <strong>'.$semester.' semester</strong> of Academic Year: <strong>'.$acadYr.'-'.$acadYr_end.'</strong><br> Please settle this matter at the DML office as soon as possible to avoid reprecusions.<br><br><br> USC TC Autolab.</p>';*/
 
 		// Get full html:
 		$body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

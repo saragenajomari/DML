@@ -40,6 +40,7 @@ $(document).ready(function(event){
         var itemQuantity = $("input#item_quantity").val();
         var itemid = $("input#iid").val();
         var status = $("#status option:selected" ).val();
+        var acadYr = $("input#acadYr" ).val();
 
             
 
@@ -55,7 +56,7 @@ $(document).ready(function(event){
             $.ajax({
             url:'<?php echo base_url(); ?>index.php/Items/update_item',
             type:"post",
-            data:{itemCode:itemCode,itemName:itemName,itemValue:itemValue,itemQuantity:itemQuantity,status:status,itemid:itemid},
+            data:{itemCode:itemCode,itemName:itemName,itemValue:itemValue,itemQuantity:itemQuantity,status:status,itemid:itemid,acadYr:acadYr},
             success: function(data){
             if (data) {
                 swal({
@@ -133,6 +134,7 @@ $(document).ready(function(event){
             </div>
             </div><br><br>
             <input type="hidden" name="iid" id="iid" value="<?php echo $data_item->id; ?>">
+            <input type="hidden" name="acadYr" id="acadYr" value="<?php echo $data_item->acadYr; ?>">
 
         <div class="form-group">
             <div class="col-md-9" style=""> 

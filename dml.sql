@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2019 at 09:46 AM
+-- Generation Time: Jun 03, 2019 at 03:36 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.2.15
 
@@ -34,6 +34,7 @@ CREATE TABLE `class` (
   `grpNo` varchar(2) NOT NULL,
   `semester` enum('1','2','3') NOT NULL,
   `acadYr` year(4) NOT NULL,
+  `acadYr_end` year(4) NOT NULL,
   `day` varchar(10) NOT NULL,
   `time_start` time NOT NULL,
   `time_end` time NOT NULL,
@@ -66,15 +67,16 @@ CREATE TABLE `constants` (
   `id` int(11) NOT NULL,
   `semester` enum('1','2','3') NOT NULL,
   `acadYr` year(4) NOT NULL,
-  `acadYr_end` year(4) NOT NULL
+  `acadYr_end` year(4) NOT NULL,
+  `reset` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `constants`
 --
 
-INSERT INTO `constants` (`id`, `semester`, `acadYr`, `acadYr_end`) VALUES
-(1, '1', 2019, 2020);
+INSERT INTO `constants` (`id`, `semester`, `acadYr`, `acadYr_end`, `reset`) VALUES
+(1, '1', 2019, 2020, '312');
 
 -- --------------------------------------------------------
 
@@ -88,7 +90,9 @@ CREATE TABLE `item` (
   `item_name` varchar(50) NOT NULL,
   `value` varchar(20) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `status` enum('available','broken','repair') NOT NULL
+  `status` enum('available','broken','repair') NOT NULL,
+  `acadYr` year(4) NOT NULL,
+  `stat` enum('1','0') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -136,7 +140,6 @@ CREATE TABLE `user` (
   `mname` varchar(50) NOT NULL,
   `lname` varchar(50) NOT NULL,
   `school_id` varchar(10) NOT NULL,
-  `username` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(30) NOT NULL,
   `status` enum('pending','active','disabled') NOT NULL,
@@ -150,8 +153,8 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `fname`, `mname`, `lname`, `school_id`, `username`, `email`, `password`, `status`, `type`, `contact`, `profilepic`, `rfid`) VALUES
-(1, 'Roy', 'Dingding', 'Bispo', '12100469', 'BispoRoy', 'jomarisaragenaofficial@gmail.com', '1234', 'active', 'admin', '09776134935', '5cbc6ecd1a346.png', '111111111');
+INSERT INTO `user` (`id`, `fname`, `mname`, `lname`, `school_id`, `email`, `password`, `status`, `type`, `contact`, `profilepic`, `rfid`) VALUES
+(1, 'Roy', 'Dingding', 'Bispo', '12345678', 'jomarisaragenaofficial@gmail.com', '123', 'active', 'admin', '12345678911', '5cf23795bce09.jpg', '');
 
 --
 -- Indexes for dumped tables

@@ -5,6 +5,8 @@ class Constants extends CI_Controller {
 
 	public function new_semester(){
 
+		$reset_old_ui = $_POST['rpass'];
+		$reset_new = $_POST['nrpass'];
 		$semester = '';
 		$data['constant'] =$this->Constants_model->get_constant();
 
@@ -12,6 +14,7 @@ class Constants extends CI_Controller {
 
 			$acadYr_start = $data_constant->acadYr;
 			$acadYr_end = $data_constant->acadYr_end;
+			$reset_old =  $data_constant->reset;
 
 			if ($data_constant->semester == '1') {
 				$semester = '2';
@@ -24,13 +27,18 @@ class Constants extends CI_Controller {
 			}
 		}
 
+		if ($reset_old_ui == $reset_old) {
 		$constantdata = array(
             'semester' => $semester,
             'acadYr' => $acadYr_start,
-            'acadYr_end' => $acadYr_end
+            'acadYr_end' => $acadYr_end,
+            'reset'		=> $reset_new
         );
-
         $status = $this->Constants_model->insertConstant($constantdata);
+		}else{
+			$status = 0;
+		}
+		
         echo $status;
 	}
 }

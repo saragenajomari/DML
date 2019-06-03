@@ -10,13 +10,19 @@ class Items extends CI_Controller {
 		$item_value = $_POST['itemValue'];
 		$item_quantity = $_POST['itemQuantity'];
 		$status = 'available';
+		$data['constant'] =$this->Constants_model->get_constant();
+		foreach ($data['constant'] as $cons) {
+			$acadYr = $cons->acadYr;
+		}
 
 		$itemdata = array(
             'item_code' => $item_code,
             'item_name' => $item_name,
             'value' => $item_value,
             'quantity' => $item_quantity,
-            'status' => $status
+            'status' => $status,
+            'acadYr' => $acadYr,
+           	'stat'	=> 0
         );
 
 		$status = $this->Items_model->insertItem($itemdata);
@@ -32,13 +38,17 @@ class Items extends CI_Controller {
 		$item_value = $_POST['itemValue'];
 		$item_quantity = $_POST['itemQuantity'];
 		$status = $_POST['status'];
+		$acadYr = $_POST['acadYr'];
+
 
 		$itemdata = array(
             'item_code' => $item_code,
             'item_name' => $item_name,
             'value' => $item_value,
             'quantity' => $item_quantity,
-            'status' => $status
+            'status' => $status,
+            'acadYr' => $acadYr,
+            'stat'	=> 0
         );
 
 		$status = $this->Items_model->updateItem($itemdata,$id);
@@ -48,7 +58,14 @@ class Items extends CI_Controller {
 
 	public function delete_item(){
 		$id = $_POST['id'];
-		$status = $this->Items_model->deleteItem($id);
+
+		$count = $this->Order_items_model->check_delete($id);
+		if ($count > 0) {
+			$status = 0;
+		}else{
+			$status = $this->Items_model->deleteItem($id);
+		}
+		
         echo $status;
 	}
 }

@@ -105,5 +105,12 @@ class Order_items_model extends CI_Model{
         $query = $this->db->get_where($this->transTable, array('ordr'=>$oid,'status'=>'returned','flag'=>0));
         return $query->result();
     }
+
+    public function check_delete($iid){
+        $this->db->where('item', $iid);
+        $this->db->where('status', 'working');
+        $this->db->or_where('status', 'dispensed');
+        return $this->db->count_all_results($this->transTable); 
+    }
 }
 ?>

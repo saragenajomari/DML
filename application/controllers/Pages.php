@@ -233,7 +233,9 @@ class Pages extends CI_Controller {
 		$id = $_SESSION['uid'];
 		$data['info'] = $this->Accounts_model->get_user($id);
 
-		$data['items'] = $this->Items_model->get_all_items();
+		//static model function for forcasting 
+		$data['items_2019'] = $this->Items_model->get_all_items_2019(2019);
+		$data['items_2020'] = $this->Items_model->get_all_items_2020(2020);
         
 		$this->load->view('includes/header');
 		$this->load->view('includes/navbar_admin',$data);
@@ -320,8 +322,13 @@ class Pages extends CI_Controller {
 		$id = $_SESSION['uid'];
 		$data['info'] 	= $this->Accounts_model->get_user($id);
 
+		$data['constant'] =$this->Constants_model->get_constant();
+		foreach ($data['constant'] as $cons) {
+			$acadYr = $cons->acadYr;
+		}
+
 		$data['class_details'] = $this->Classes_model->get_class_by_id($cid);
-		$data['items'] = $this->Items_model->get_ok_items();
+		$data['items'] = $this->Items_model->get_ok_items($acadYr);
 
 		$this->load->view('includes/header');
 		$this->load->view('includes/navbar_student',$data);
@@ -483,7 +490,9 @@ class Pages extends CI_Controller {
 	public function staff_inventory_page(){
 		$id = $_SESSION['uid'];
 		$data['info'] 	= $this->Accounts_model->get_user($id);
-		$data['items'] = $this->Items_model->get_all_items();
+		//$data['items'] = $this->Items_model->get_all_items();
+		$data['items_2019'] = $this->Items_model->get_all_items_2019(2019);
+		$data['items_2020'] = $this->Items_model->get_all_items_2020(2020);
 
 		$this->load->view('includes/header');
 		$this->load->view('includes/navbar_staff',$data);

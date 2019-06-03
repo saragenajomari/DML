@@ -17,8 +17,8 @@
                 </div>
                 <div class="navi">
                     <ul>
-                        <li class="active"><a href="<?php echo site_url('Pages/start_new_sem_page'); ?>"><i class="fa fa-undo"></i><span class="hidden-xs hidden-sm">New Semester</span></a></li>
-                        <li class="active"><a href="<?php echo site_url('Pages/admin_home_page'); ?>"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Accounts</span></a></li>
+                        <li class=""><a href="<?php echo site_url('Pages/start_new_sem_page'); ?>"><i class="fa fa-undo"></i><span class="hidden-xs hidden-sm">New Semester</span></a></li>
+                        <li class=""><a href="<?php echo site_url('Pages/admin_home_page'); ?>"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Accounts</span></a></li>
                         <li><a href="<?php echo site_url('Pages/admin_class_page'); ?>"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Classes</span></a></li> 
                         <li><a href="<?php echo site_url('Pages/admin_student_page'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Students</span></a></li> 
                         <li><a href="<?php echo site_url('Pages/inventory_page'); ?>"><i class="fa fa-cubes"></i><span class="hidden-xs hidden-sm">Inventory</span></a></li> 
