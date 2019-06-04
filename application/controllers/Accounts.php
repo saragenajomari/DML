@@ -198,6 +198,7 @@ class Accounts extends CI_Controller {
 			$sname = $account->fname.' '.$account->mname.' '.$account->lname;
 			$sid = $account->school_id;
 			$email = $account->email; 
+			$contact = $account->contact; 
 		}
 
 		$subject = 'USC DML: Account Activated';
@@ -223,7 +224,7 @@ class Accounts extends CI_Controller {
 		// Also, for getting full html you may use the following internal method:
 		//$body = $this->email->full_html($subject, $message);
 
-			$result = $this->email
+			$result_mail = $this->email
     		->from('jomaridummy@gmail.com')		//change here and email config file
     		->reply_to('')    // Optional, an account where a human being reads.
     		->to($email) // to($email)
@@ -231,9 +232,20 @@ class Accounts extends CI_Controller {
     		->message($body)
     		->send();
 
-    		if ($result) {
-    			$status = $this->Accounts_model->activateAccount($id,$rfid);
-        		echo $status;
+    		if ($result_mail) {
+    			$api_code = 'TR-ROYKR224194_QKMCM';
+    			$message = 'Good day! This is DML, Your account has been activated. Check your email for more details. Thank You';
+    			$result_sms = $this->itexmo($contact,$message,$api_code);
+					if ($result_sms == ""){
+						echo "iTexMo: No response from server!!!
+						Please check the METHOD used (CURL or CURL-LESS). If you are using CURL then try CURL-LESS and vice versa.	
+						Please CONTACT US for help. ";	
+					}else if ($result_sms == 0){
+						$status = $this->Accounts_model->activateAccount($id,$rfid);
+        				echo $status;
+					}else{	
+						echo "Error Num ". $result . " was encountered!";
+					}
     		}
 			//var_dump($result);
 			//echo '<br />';
@@ -244,5 +256,19 @@ class Accounts extends CI_Controller {
 			$status = $this->Accounts_model->activateAccount($id,$rfid);
         	echo $status;
 		}	
+	}
+
+	public function itexmo($number,$message,$apicode){
+		$url = 'https://www.itexmo.com/php_api/api.php';
+		$itexmo = array('1' => $number, '2' => $message, '3' => $apicode);
+		$param = array(
+    		'http' => array(
+        	'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+        	'method'  => 'POST',
+        	'content' => http_build_query($itexmo),
+   			),
+		);
+		$context  = stream_context_create($param);
+		return file_get_contents($url, false, $context);
 	}
 }

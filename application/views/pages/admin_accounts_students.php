@@ -31,7 +31,7 @@ function activateAcc(){
                 url: "<?php echo base_url(); ?>index.php/Accounts/activate_account",
                 data: {id:id,rfid:rfid},
                 success: function(data){
-                    if (data) {
+                    if (data==1) {
                         swal({
                             title: "Poof! This Account has been updated!",
                             text: "",
@@ -40,7 +40,13 @@ function activateAcc(){
                         }).then(function(isConfirm){
                             location.reload();
                         });                    
-                    } 
+                    }
+                    /*else{
+                        alert(data);
+                    } */
+                },
+                error: function(data){
+                    swal("Something went wrong!"); 
                 }
             });   
         } else {
@@ -114,8 +120,7 @@ function activateAcc(){
                     <input class="form-control" type="text" name="rfid" id="rfid" value="">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="cancel" data-dismiss="modal">Close</button>
-                    
+                    <button type="button" class="cancel" onclick="location.reload()" data-dismiss="modal">Close</button> 
                 </div>
             </div>
 

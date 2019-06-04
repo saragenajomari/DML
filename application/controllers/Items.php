@@ -22,7 +22,7 @@ class Items extends CI_Controller {
             'quantity' => $item_quantity,
             'status' => $status,
             'acadYr' => $acadYr,
-           	'stat'	=> 0
+           	'stat'	=> '0'
         );
 
 		$status = $this->Items_model->insertItem($itemdata);
@@ -48,7 +48,7 @@ class Items extends CI_Controller {
             'quantity' => $item_quantity,
             'status' => $status,
             'acadYr' => $acadYr,
-            'stat'	=> 0
+            'stat'	=> '0'
         );
 
 		$status = $this->Items_model->updateItem($itemdata,$id);

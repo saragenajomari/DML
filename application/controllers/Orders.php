@@ -167,6 +167,7 @@ class Orders extends CI_Controller {
 					$sname = $data_student->fname.' '.$data_student->mname.' '.$data_student->lname;
 					$sid   = $data_student->school_id;
 					$email = $data_student->email;
+					$contact = $data_student->contact;
 				}
 			}
 
@@ -183,7 +184,21 @@ class Orders extends CI_Controller {
 			$message = '<p>Hello <strong>'.$sname.'</strong> ('.$sid.'),<br><br> This is from DML, reminding you that your order has been approved, under this order are these item(s):<br>'.$item_list.'In the Class: <strong>'.$ccode.'</strong> Group: <strong>'.$grpNo.'</strong> of the <strong>'.$semester.' semester</strong> of Academic Year: <strong>'.$acadYr.'-'.$acadYr_end.'</strong><br> You can get your item(s) on the counter inside the laboratory during the class schedule.<br><br><br> USC TC Autolab.</p>';
 
 			$catch = $this->send_email($subject,$message,$email);
-			echo $catch;
+			if ($catch) {
+				$api_code = 'TR-ROYKR224194_QKMCM';
+    			$message_sms = 'Good day! This is DML. Your order has been approved. Check your email for more details. Thank You!';
+    			$result_sms = $this->itexmo($contact,$message_sms,$api_code);
+					if ($result_sms == ""){
+						echo "iTexMo: No response from server!!!
+						Please check the METHOD used (CURL or CURL-LESS). If you are using CURL then try CURL-LESS and vice versa.	
+						Please CONTACT US for help. ";	
+					}else if ($result_sms == 0){
+						echo $catch;
+					}else{	
+						echo "Error Num ". $result . " was encountered!";
+					}
+			}
+			//echo $catch;
 		}
 
 		} elseif ($err == 1) {
@@ -307,8 +322,12 @@ class Orders extends CI_Controller {
 				$date = date("Y-m-d");
 				$order_status = $this->Ordr_model->updateOrdr_return_broken($oid,$date);
 				//from here
-				$this->email_details($order_id);
-				echo 1;
+				$catcher = $this->email_details($order_id);
+				if ($catcher == 1) {
+					echo 1;
+				}else{
+					echo 3;
+				}
 			}else{
 				echo 2;
 			}
@@ -342,6 +361,7 @@ class Orders extends CI_Controller {
 					$sname = $data_student->fname.' '.$data_student->mname.' '.$data_student->lname;
 					$sid   = $data_student->school_id;
 					$email = $data_student->email;
+					$contact = $data_student->contact;
 				}
 				$date_notify = $data_ordr->date_returned;
 			}
@@ -365,8 +385,23 @@ class Orders extends CI_Controller {
 		$subject = 'USC DML: Student Notification';
 		$message = '<p>Hello <strong>'.$sname.'</strong> ('.$sid.'),<br><br> This is from DML, reminding you that you have possibly damaged/lost this item(s):<br>'.$item_list.'On <strong>'.$date_notify.'</strong> during the Class: <strong>'.$ccode.'</strong> Group: <strong>'.$grpNo.'</strong> of the <strong>'.$semester.' semester</strong> of Academic Year: <strong>'.$acadYr.'-'.$acadYr_end.'</strong><br> Please settle this matter at the DML office as soon as possible to avoid reprecusions.<br><br><br> USC TC Autolab.</p>';
 
-		$catch = $this->send_email($subject,$message,$email);	
-		return $catch;
+		$catch = $this->send_email($subject,$message,$email);
+
+		if ($catch) {
+			$api_code = 'TR-ROYKR224194_QKMCM';
+    		$message_sms = 'Hi! This is DML. You have damaged an item in your order. Check your email for more details. Thanks!';
+    		$result_sms = $this->itexmo($contact,$message_sms,$api_code);
+				if ($result_sms == ""){
+					echo "iTexMo: No response from server!!!
+					Please check the METHOD used (CURL or CURL-LESS). If you are using CURL then try CURL-LESS and vice versa.	
+					Please CONTACT US for help. ";	
+				}else if ($result_sms == 0){
+					return $catch;
+				}else{	
+					echo "Error Num ". $result . " was encountered!";
+				}
+		}	
+		//return $catch;
 	}
 
 	public function send_email($subject,$message,$email){
@@ -439,7 +474,20 @@ class Orders extends CI_Controller {
 				}
 			}
 		}
+	}
 
+	public function itexmo($number,$message,$apicode){
+		$url = 'https://www.itexmo.com/php_api/api.php';
+		$itexmo = array('1' => $number, '2' => $message, '3' => $apicode);
+		$param = array(
+    		'http' => array(
+        	'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+        	'method'  => 'POST',
+        	'content' => http_build_query($itexmo),
+   			),
+		);
+		$context  = stream_context_create($param);
+		return file_get_contents($url, false, $context);
 	}
 }
 ?>
