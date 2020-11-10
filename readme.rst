@@ -1,4 +1,25 @@
 ###################
+What is DML
+###################
+
+DML is a web application project for a school department. 
+The purpose of the project is to keep a list of the students enrolled to a specific subject and to automate the  
+ordering process of materials that is necessary in a laboratory class. The application also tracks the inventory 
+of the said department.
+
+There are 4 types of users to this system.
+: Admin
+: Staff
+: Teacher
+: Student
+
+1.) Admin
+
+Admin serves as an overseer of the whole application.
+
+
+
+###################
 What is CodeIgniter
 ###################
 
