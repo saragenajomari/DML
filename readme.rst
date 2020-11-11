@@ -16,12 +16,12 @@ There are 4 types of users to this system.
 1.) Admin
 Admin serves as an overseer of the whole application.
 Capabilities:
--  `Creates/Deletes accounts for the teachers and staff`_
--  `Approves student account`_
--  `Create/Edit/Delete new class`_
--  `Add/Remove students in a class`_
--  `Add/update/remove new materials in the inventory`_
--  `Resets the web application when the new semester comes in`_
+-  Creates/Deletes accounts for the teachers and staff
+-  Approves student account
+-  Create/Edit/Delete new class
+-  Add/Remove students in a class
+-  Add/update/remove new materials in the inventory
+-  Resets the web application when the new semester comes in
 
 2.) Staff
 Capabilities:
