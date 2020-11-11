@@ -25,20 +25,19 @@ Capabilities:
 
 2.) Staff
 Capabilities:
--  `Approve student pending accounts`_
--  `Add/update/remove new materials in the inventory`_
--  `Keeps track on the approved orders and dispense them in the lab`_
--  `Logs the status of the material after the material is returned (If its broken or damaged)`_
+-  Approve student pending accounts
+-  Add/update/remove new materials in the inventory
+-  Keeps track on the approved orders and dispense them in the lab
+-  Logs the status of the material after the material is returned (If its broken or damaged)
 
 3.) Teacher
 Teacher approves the materials ordered by the students. 
 Capabilities:
--  `Approves/Decline/View Order of items from the students`_
+-  Approves/Decline/View Order of items from the students
 
 4.)
 Capabilities:
--  `Orders materials`_
-
+-  Orders materials
 
 
 
