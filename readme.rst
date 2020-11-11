@@ -14,8 +14,32 @@ There are 4 types of users to this system.
 : Student
 
 1.) Admin
-
 Admin serves as an overseer of the whole application.
+Capabilities:
+* Creates/Deletes accounts for the teachers and staff
+* Approves student account
+* Create/Edit/Delete new class
+* Add/Remove students in a class
+* Add/update/remove new materials in the inventory
+* Resets the web application when the new semester comes in
+
+2.) Staff
+Capabilities:
+* Approve student pending accounts
+* Add/update/remove new materials in the inventory
+* Keeps track on the approved orders and dispense them in the lab
+* Logs the status of the material after the material is returned (If its broken or damaged)
+
+3.) Teacher
+Teacher approves the materials ordered by the students. 
+Capabilities:
+* Approves/Decline/View Order of items from the students
+
+4.)
+Capabilities:
+* Orders materials
+
+
 
 
 
