@@ -8,6 +8,7 @@ ordering process of materials that is necessary in a laboratory class. The appli
 of the said department.
 
 There are 4 types of users to this system.
+
 - Admin
 
 - Staff
@@ -27,7 +28,6 @@ Capabilities:
 -  Add/update/remove new materials in the inventory
 -  Resets the web application when the new semester comes in
 
-- 
 
 2.) Staff
 
