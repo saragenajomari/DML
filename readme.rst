@@ -23,6 +23,8 @@ Capabilities:
 -  Add/update/remove new materials in the inventory
 -  Resets the web application when the new semester comes in
 
+- 
+
 2.) Staff
 Capabilities:
 -  Approve student pending accounts
@@ -39,8 +41,33 @@ Capabilities:
 Capabilities:
 -  Orders materials
 
+link to the site: https://dmlab.000webhostapp.com/
 
+Accounts:
+- Admin
+Username: 00000001
+Password: 123
 
+- Staff
+Username: 00000002
+Password: 123
+
+- Teacher
+Username: 00000003
+Password: 123
+
+Username: 00000004
+Password: 123
+
+- Student
+Username: 12100469
+Password: 123
+
+Username: 12100694
+Password: 123
+
+Username: 12100964
+Password: 123
 
 ###################
 What is CodeIgniter
